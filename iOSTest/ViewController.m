@@ -7,8 +7,10 @@
 //
 
 #import "ViewController.h"
+NSString *const TEST_NOTIFICATION = @"FirstTest";
 
 @interface ViewController ()
+
 
 @end
 
@@ -16,14 +18,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:nil object:nil];
+    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:TEST_NOTIFICATION object:@"hahapost"];
+}
+
+- (void)handleNotification:(NSNotification *)notification
+{
+    NSLog(@"notification = %@", notification.name);
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)dealloc{
+    NSLog(@"观察者销毁了");
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
 
 @end
